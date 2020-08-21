@@ -20,7 +20,7 @@ def scrap(url):
     table = soup.find('table',attrs={'class':'centerText newsTable2'}) 
     tr = table.find_all('tr') 
 
-    temp = [] #initiating a tuple
+    temp = [] #initiating a tuple and iteration
         #name_of_object = row.find_all(...)[0].text
     for i in range(1, len(tr)):
         row = table.find_all('tr')[i]
@@ -39,10 +39,10 @@ def scrap(url):
         temp.append((tanggal,ask,bid)) 
     
     
-        #creating the dataframe
+        #Creating the dataframe
         df = pd.DataFrame(temp, columns = ('Date','Sell','Buy')) 
         
-        #data wranggling 
+        #Data Wranggling 
         df['Buy'] = df['Buy'].apply(lambda x:x.replace(',','.'))
         df['Sell'] = df['Sell'].apply(lambda x:x.replace(',','.'))
         df[['Sell','Buy']] = df[['Sell','Buy']].astype('float64')
@@ -67,7 +67,7 @@ def index():
     figfile.seek(0)
     figdata_png = base64.b64encode(figfile.getvalue())
     result = str(figdata_png)[2:-1]
-    #This part for rendering matplotlib
+    
 
     #this is for rendering the table
     df = df.to_html(classes=["table table-bordered table-striped table-dark table-condensed"])
